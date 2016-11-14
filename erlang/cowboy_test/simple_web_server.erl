@@ -8,7 +8,7 @@ start(Port) ->
 	Dispatch = cowboy_router:compile(
 	[
 	%% {URIHost, list({URIPath, Handler, Opts})}
-	{'_', [{'_', simpl_web_server, []}]}
+	{'_', [{'_', simple_web_server, []}]}
 	]),
 	cowboy:start_http(my_simple_web_server,
 				      N_acceptors,
@@ -16,17 +16,19 @@ start(Port) ->
 					  [{env, [{dispatch, Dispatch}]}]
 					  ).
 
-init({tcp, http}, Req, _Opts_ ->
+init({tcp, http}, Req, _Opts_) ->
 	{ok, Req, undifined}.
 
 handle(Req,State) ->
-	{Path, Req1} = cowboy_req:path(Req).
-	Response = cowboy_req:reply(200, [], Response, Req1),
-	{ok, Req2, State).
+	{Path, Req1} = cowboy_req:path(Req),
+	Response = read_file(Path),
+	io:format("--------->~p~n", [Response]),
+	{ok, Req2} = cowboy_req:reply(200, [], Response, Req1),
+	{ok, Req2, State}.
 
 read_file(Path) ->
-	File = ["."|biary_to_list(Path)],
-	cash file:read_file(File) of 
+	File = ["."|binary_to_list(Path)],
+	case file:read_file(File) of 
 		{ok, Bin} -> Bin;
 		_ -> ["<pre>cannot read:", File, "</prie>"]
 		end.
