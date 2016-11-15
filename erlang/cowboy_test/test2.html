@@ -1,6 +1,6 @@
 <script src ="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <h1>Test2<h1>
-<burron id="button1">click</button>
+<button id="button1">click</button>
 <div id="result"></div>
 <script>
 $(document).ready(go);
@@ -17,7 +17,7 @@ function test() {
 			data:JSON.stringify(data),
 			success:function(str){
 				var ret = JSON.parse(str);
-				$("#result").html("<pre>"+
+				$("#result").html("<pre>"+ "---------------------" + 
 								  JSON.stringify(ret, undefined, 4) +
 								  "</pre>");
 			}});

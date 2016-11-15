@@ -1,5 +1,5 @@
 -module(echo).
--compile([me/1]).
+-compile(export_all).
 
 me(X) ->
 	io:format("echo:~p~n", [X]),

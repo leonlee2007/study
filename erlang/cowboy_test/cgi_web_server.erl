@@ -31,6 +31,7 @@ handle1(<<"/cgi">>, Req, State) ->
 	Response = call(Args, Val),
 	Json = mochijson2:encode(Response),
 	{ok, Req3} = cowboy_req:reply(200, [], Json, Req2),
+	io:format("==========>>>>>~p =====~p~n", [Json, Req2]),
 	{ok, Req3, State};
 
 handle1(Path, Req, State) ->
@@ -50,8 +51,15 @@ read_file(Path) ->
 call([{<<"mod">>, MB}, {<<"func">>, FB}],X) ->
 	Mod = list_to_atom(binary_to_list(MB)),
 	Func = list_to_atom(binary_to_list(FB)),
-	apply(Mod, Func, [X]).
+	apply(Mod, Func, [X]);
 
+call(C,X) ->
+	io:format("callaaa=========>~p =====~p~n", [C, X]).
+
+
+start_from_shell([PortAsAtom]) ->
+	PortAsInt = list_to_integer(atom_to_list(PortAsAtom)),
+	start(PortAsInt).
 
 
 
