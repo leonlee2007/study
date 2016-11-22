@@ -1,0 +1,5 @@
+ select * from mysql.user; 查找用户权限表
+
+给用户相关的权限
+ grant all privileges on *.* to sgame@'localhost' identified by 'Lilith_107';
+ grant all privileges on *.* to sgame@'%' identified by 'Lilith_107';
